@@ -26,6 +26,7 @@ public class RestFeedClient extends RestClient implements Feeds {
 		target = client.target( serverURI ).path( UsersService.PATH );
 	}
 
+    //DONE
     private Result<Long> clt_postMessage(String user, String pwd, Message msg){
         Response r  = target.path( user )
                             .queryParam(FeedsService.PWD, pwd)
@@ -35,97 +36,99 @@ public class RestFeedClient extends RestClient implements Feeds {
         return super.toJavaResult(r, Long.class);
     }
 
-    private Result<Long> clt_removeFromPersonalFeed(String user, String pwd, Message msg){
+    //DONE
+    private Result<Void> clt_removeFromPersonalFeed(String user, long mid, String pwd){
         Response r  = target.path( user )
+                            .path(Long.toString(mid))
                             .queryParam(FeedsService.PWD, pwd)
                             .request()
-                            .accept(MediaType.APPLICATION_JSON)
-                            .post(Entity.entity(msg, MediaType.APPLICATION_JSON));
-        return super.toJavaResult(r, Long.class);
+                            .delete();
+        return super.toJavaResult(r, Void.class);
     }
 
-    private Result<Long> clt_getMessage(String user, String pwd, Message msg){
+    private Result<Message> clt_getMessage(String user, long mid){
         Response r  = target.path( user )
-                            .queryParam(FeedsService.PWD, pwd)
+                            .path(Long.toString(mid))
                             .request()
                             .accept(MediaType.APPLICATION_JSON)
-                            .post(Entity.entity(msg, MediaType.APPLICATION_JSON));
-        return super.toJavaResult(r, Long.class);
+                            .get();
+        return super.toJavaResult(r, Message.class);
     }
-    private Result<Long> clt_getMessages(String user, String pwd, Message msg){
-        Response r  = target.path( user )
-                            .queryParam(FeedsService.PWD, pwd)
-                            .request()
-                            .accept(MediaType.APPLICATION_JSON)
-                            .post(Entity.entity(msg, MediaType.APPLICATION_JSON));
-        return super.toJavaResult(r, Long.class);
+
+    private Result<List<Message>> clt_getMessages(String user, long time){
+        Response r  = target.path(user)
+                      .queryParam(FeedsService.TIME, time)
+                      .request()
+                      .accept(MediaType.APPLICATION_JSON)
+                      .get();
+        return super.toJavaResult(r, new GenericType<List<Message>>() {});
     }
-    private Result<Long> clt_subUser(String user, String pwd, Message msg){
-        Response r  = target.path( user )
+
+    private Result<Void> clt_subUser(String user, String userSub, String pwd){
+        Response r  = target.path("sub")
+                            .path( user )
+                            .path( userSub )
                             .queryParam(FeedsService.PWD, pwd)
                             .request()
-                            .accept(MediaType.APPLICATION_JSON)
-                            .post(Entity.entity(msg, MediaType.APPLICATION_JSON));
-        return super.toJavaResult(r, Long.class);
+                            .post(null);
+        
+                            return super.toJavaResult(r,Void.class);
     }
-    private Result<Long> clt_unsubscribeUser(String user, String pwd, Message msg){
-        Response r  = target.path( user )
+
+    private  Result<Void> clt_unsubscribeUser(String user, String userSub, String pwd){
+        Response r  = target.path("sub")
+                            .path( user )
+                            .path( userSub )
                             .queryParam(FeedsService.PWD, pwd)
                             .request()
-                            .accept(MediaType.APPLICATION_JSON)
-                            .post(Entity.entity(msg, MediaType.APPLICATION_JSON));
-        return super.toJavaResult(r, Long.class);
+                            .delete();
+        return super.toJavaResult(r, Void.class);
     }
-    private Result<Long> clt_listSubs(String user, String pwd, Message msg){
-        Response r  = target.path( user )
-                            .queryParam(FeedsService.PWD, pwd)
+
+    private Result<List<String>> clt_listSubs(String user){
+        Response r  = target.path( "sub/list" )
+                            .path( user)
                             .request()
                             .accept(MediaType.APPLICATION_JSON)
-                            .post(Entity.entity(msg, MediaType.APPLICATION_JSON));
-        return super.toJavaResult(r, Long.class);
+                            .get();
+        
+        return super.toJavaResult(r, new GenericType<List<String>> () {});
     }
 
 
     @Override
     public Result<Long> postMessage(String user, String pwd, Message msg) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'postMessage'");
+        return super.reTry(() -> clt_postMessage(user, pwd, msg)); 
     }
 
     @Override
     public Result<Void> removeFromPersonalFeed(String user, long mid, String pwd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeFromPersonalFeed'");
+        return super.reTry(() -> clt_removeFromPersonalFeed(user, mid, pwd)); 
     }
 
     @Override
     public Result<Message> getMessage(String user, long mid) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMessage'");
+        return super.reTry(() -> clt_getMessage(user, mid)); 
     }
 
     @Override
     public Result<List<Message>> getMessages(String user, long time) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMessages'");
+        return super.reTry(() -> clt_getMessages(user, time));
     }
 
     @Override
     public Result<Void> subUser(String user, String userSub, String pwd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'subUser'");
+       return super.reTry(() -> clt_subUser(user, userSub, pwd));
     }
 
     @Override
     public Result<Void> unsubscribeUser(String user, String userSub, String pwd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'unsubscribeUser'");
+        return super.reTry(() -> clt_unsubscribeUser(user, userSub, pwd));
     }
 
     @Override
     public Result<List<String>> listSubs(String user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listSubs'");
+        return super.reTry(() -> clt_listSubs(user));
     }
 	
 }	

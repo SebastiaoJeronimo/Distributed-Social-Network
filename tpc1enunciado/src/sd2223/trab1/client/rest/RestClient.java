@@ -6,13 +6,15 @@ import static sd2223.trab1.api.absctractServiceAPI.Result.ok;
 import static sd2223.trab1.api.absctractServiceAPI.Result.error;
 
 import java.net.URI;
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
-
+import sd2223.trab1.api.Message;
+import sd2223.trab1.api.User;
 /*import aula5.api.java.Result;
 import aula5.api.java.Result.ErrorCode;*/
 import sd2223.trab1.api.absctractServiceAPI.Result;
@@ -71,6 +73,20 @@ public class RestClient {
 			else 
 				if( status == Status.NO_CONTENT) return ok();
 			
+			return error(getErrorCodeFrom(status.getStatusCode()));
+		} finally {
+			r.close();
+		}
+	}
+
+	protected <T> Result<T> toJavaResult(Response r, GenericType<T> entityType) {
+		try {
+			var status = r.getStatusInfo().toEnum();
+			if (status == Status.OK && r.hasEntity())
+				return ok(r.readEntity(entityType));
+			else
+			if( status == Status.NO_CONTENT) return ok();
+
 			return error(getErrorCodeFrom(status.getStatusCode()));
 		} finally {
 			r.close();
