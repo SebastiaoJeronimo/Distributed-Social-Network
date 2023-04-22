@@ -1,7 +1,9 @@
-package aula5.clients.rest;
+package sd2223.trab1.client.rest;
 
-import static aula5.api.java.Result.error;
-import static aula5.api.java.Result.ok;
+/*import static aula5.api.java.Result.error;
+import static aula5.api.java.Result.ok;*/
+import static sd2223.trab1.api.absctractServiceAPI.Result.ok;
+import static sd2223.trab1.api.absctractServiceAPI.Result.error;
 
 import java.net.URI;
 import java.util.function.Supplier;
@@ -10,8 +12,13 @@ import java.util.logging.Logger;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
-import aula5.api.java.Result;
-import aula5.api.java.Result.ErrorCode;
+
+/*import aula5.api.java.Result;
+import aula5.api.java.Result.ErrorCode;*/
+import sd2223.trab1.api.absctractServiceAPI.Result;
+import sd2223.trab1.api.absctractServiceAPI.Result.ErrorCode;
+
+
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
