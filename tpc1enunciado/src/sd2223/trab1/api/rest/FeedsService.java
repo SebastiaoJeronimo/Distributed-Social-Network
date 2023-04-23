@@ -12,7 +12,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import sd2223.trab1.api.Message;
-import sd2223.trab1.api.User;
+import sd2223.trab1.api.Message;
 
 @Path(FeedsService.PATH)
 public interface FeedsService {
