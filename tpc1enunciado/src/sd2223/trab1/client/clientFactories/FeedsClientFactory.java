@@ -1,9 +1,10 @@
-package sd2223.trab1.client;
+package sd2223.trab1.client.clientFactories;
 
 import java.net.URI;
-import sd2223.trab1.api.abstractServiceAPI.java.Feeds;
-import sd2223.trab1.clients.rest.RestFeedClient;
-import sd2223.trab1.clients.soap.SoapFeedsClient;
+
+import sd2223.trab1.api.absctractServiceAPI.Feeds;
+import sd2223.trab1.client.rest.RestFeedClient;
+import sd2223.trab1.client.soap.SoapFeedsClient;
 
 public class FeedsClientFactory {
 

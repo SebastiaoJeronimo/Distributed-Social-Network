@@ -1,11 +1,10 @@
-package sd2223.trab1.client;
+package sd2223.trab1.client.clientFactories;
 
 import java.net.URI;
 
-import sd2223.trab1.api.abstractServiceAPI.java.Users;
-import sd2223.trab1.clients.rest.RestUsersClient;
-import sd2223.trab1.clients.soap.SoapUsersClient;
-
+import sd2223.trab1.api.absctractServiceAPI.Users;
+import sd2223.trab1.client.rest.RestUsersClient;
+import sd2223.trab1.client.soap.SoapFeedsClient;
 
 public class UsersClientFactory {
 
