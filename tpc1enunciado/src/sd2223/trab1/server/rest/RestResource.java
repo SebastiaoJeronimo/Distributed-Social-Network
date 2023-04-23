@@ -37,9 +37,9 @@ public class RestResource {
 			return Status.INTERNAL_SERVER_ERROR;
 		case OK:
 			return result.value() == null ? Status.NO_CONTENT : Status.OK;
-		default:
+		default:    
 			return Status.INTERNAL_SERVER_ERROR;
 		}
 	}
 
-}
+}       
