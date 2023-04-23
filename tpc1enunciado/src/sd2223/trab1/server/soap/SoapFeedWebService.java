@@ -2,8 +2,6 @@ package sd2223.trab1.server.soap;
 
 import java.util.function.Function;
 
-import sd2223.trab1.api.java.Result;
-
 public abstract class SoapWebService<E extends Throwable> {
 
 	Function<Result<?>, E> exceptionMapper;
